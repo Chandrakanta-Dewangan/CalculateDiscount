@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Assignment</string>
+    <string name="total_sales">Total Sales :</string>
+    <string name="after_discount_sales">Total Sales after discount : </string>
+    <string name="loss_sales">Total loss due to discount : </string>
+    <string name="average_discount">Average discount : </string>
+</resources>
