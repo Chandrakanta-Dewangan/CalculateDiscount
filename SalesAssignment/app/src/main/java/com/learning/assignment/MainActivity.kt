@@ -32,13 +32,13 @@ class MainActivity : AppCompatActivity() {
             Array<Product>::class.java
         )
 
-        calculateDiscount(orders.toList(), products.toList(), discounts.toList(), salesProfitTv)
+        calculateSales(orders.toList(), products.toList(), discounts.toList(), salesProfitTv)
     }
 
     /**
-     * to calculate out discount of the sale
+     * to calculate sale for the product
      */
-    private fun calculateDiscount(
+    private fun calculateSales(
         orderList: List<Order>,
         productList: List<Product>,
         discountList: List<Discount>,
@@ -58,8 +58,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (order.discount != null) {
-                totalDiscount += discountMap[order.discount]!!
-                discountedSales = currentSales * discountMap[order.discount]!!
+                totalDiscount += calculatedOrderDiscount(order.discount, discountMap)
+                discountedSales =
+                    currentSales * calculatedOrderDiscount(order.discount, discountMap)
             }
             totalSales += currentSales
             totalLossAfterDiscount += discountedSales
@@ -109,4 +110,21 @@ class MainActivity : AppCompatActivity() {
             reader.readText()
         }
     }
+
+    /**
+     * Calculate total discount for order
+     */
+    private fun calculatedOrderDiscount(
+        discount: String,
+        discountMap: MutableMap<String, Double>
+    ): Double {
+        val discountCodeList = discount.split(",")
+        var totalDiscount = 0.0
+        for (discountCode in discountCodeList) {
+            totalDiscount += (discountMap[discountCode] ?: 0.0)
+        }
+        return totalDiscount
+    }
+
 }
+
